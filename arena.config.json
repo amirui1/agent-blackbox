@@ -1,0 +1,23 @@
+{
+  "name": "agent-blackbox",
+  "version": "0.1.0",
+  "entrypoint": "server:app",
+  "agent": "agent:Agent",
+  "runtime": {
+    "language": "python",
+    "python": ">=3.10",
+    "start": "uvicorn server:app --host 0.0.0.0 --port ${PORT:-8000}"
+  },
+  "protocol": {
+    "health": "/health",
+    "action": "/get_action",
+    "invoke": "/invoke",
+    "method": "POST",
+    "content_type": "application/json",
+    "authorization": "Bearer ${ARENA_API_KEY}"
+  },
+  "capabilities": ["single-agent", "multi-agent", "state-passthrough"],
+  "metadata": {
+    "description": "Container-ready Arena agent with a replaceable act() policy."
+  }
+}
